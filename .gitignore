@@ -1,0 +1,6 @@
+## Rust artifacts
+/server/target
+
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock

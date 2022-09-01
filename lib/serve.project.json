@@ -1,0 +1,16 @@
+{
+    "name": "stow-serve",
+    "tree": {
+        "$className": "DataModel",
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "Stow": {
+                "$path": "src"
+            }
+        },
+        "ServerScriptService": {
+            "$className": "ServerScriptService",
+            "$path": "test"
+        }
+    }
+}

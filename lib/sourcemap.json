@@ -1,0 +1,1 @@
+{"name":"stow-serve","className":"DataModel","filePaths":["serve.project.json"],"children":[{"name":"ReplicatedStorage","className":"ReplicatedStorage","children":[{"name":"Stow","className":"ModuleScript","filePaths":["src\\init.lua"],"children":[{"name":"Http","className":"ModuleScript","filePaths":["src\\Http.lua"]}]}]}]}
