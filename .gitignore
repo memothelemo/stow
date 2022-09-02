@@ -1,6 +1,14 @@
-## Rust artifacts
-/server/target
-
 # Roblox Studio lock files
 /*.rbxlx.lock
 /*.rbxl.lock
+
+## Node built directories
+/node_modules
+/build
+
+## Logs
+*.log
+
+## Typescript cache
+*.tsbuildinfo
+
