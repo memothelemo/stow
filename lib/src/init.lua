@@ -4,12 +4,11 @@ local DEBUG_MODE = true
 local SERVER_ID = game.JobId
 
 if SERVER_ID:len() == 0 or SERVER_ID == nil then
-	SERVER_ID = game:GetService("HttpService"):GenerateGUID(false)
+    SERVER_ID = game:GetService("HttpService"):GenerateGUID(false)
 end
 
 local Http = require(script.Http)
 local TableUtil = require(script.TableUtil)
-
 
 local StowStore = {
     --[[
@@ -51,37 +50,37 @@ function StowStore:_registerClientSession()
     assert(self._databaseEnabled, "Database backup is disabled!")
 
     log("[%s] registering client session from database API (url = %s)", self._storeName, self._databaseUrl)
-    local data = Http.RequestAsync {
+    local data = Http.RequestAsync({
         Url = string.format("%s/register", self._databaseUrl),
         Method = "POST",
         Headers = self:_headers(),
-    }
+    })
 
-	game:BindToClose(function()
-		task.spawn(function()
-			log("[%s] shutting down", self._storeName)
-			local success, response = pcall(Http.RequestAsync, {
-				Url = string.format("%s/logout", self._databaseUrl),
-				Method = "POST",
-				Headers = self:_headers(),
-			})
-			print(response)
-			local alternative = success and not response.Success
-			if not success or not response.Success then
-				log("[%s] failed to logout the API", self._storeName)
-				if alternative then
-					log("[%s] error: (%d) %s", self._storeName, response.StatusCode, response.StatusMessage)
-				else
-					log("[%s] error: %s", self._storeName, tostring(response))
-				end
-			else
-				log("[%s] successfully logged out", self._storeName)
-			end
-		end)
+    game:BindToClose(function()
+        task.spawn(function()
+            log("[%s] shutting down", self._storeName)
+            local success, response = pcall(Http.RequestAsync, {
+                Url = string.format("%s/logout", self._databaseUrl),
+                Method = "POST",
+                Headers = self:_headers(),
+            })
+            print(response)
+            local alternative = success and not response.Success
+            if not success or not response.Success then
+                log("[%s] failed to logout the API", self._storeName)
+                if alternative then
+                    log("[%s] error: (%d) %s", self._storeName, response.StatusCode, response.StatusMessage)
+                else
+                    log("[%s] error: %s", self._storeName, tostring(response))
+                end
+            else
+                log("[%s] successfully logged out", self._storeName)
+            end
+        end)
 
-		-- waiting for a second to log out the session
-		-- otherwise, let the server do the cleanup every 10 minutes
-		task.wait(1)
+        -- waiting for a second to log out the session
+        -- otherwise, let the server do the cleanup every 10 minutes
+        task.wait(1)
     end)
 end
 
