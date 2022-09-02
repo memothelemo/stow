@@ -1,12 +1,12 @@
 {
 	"compilerOptions": {
-		"target": "ES3",
-    "module": "commonjs",
-    "outDir": "build",
-    "rootDir": "src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "types": ["@types/node"]
+		"target": "ES2015",
+		"module": "commonjs",
+		"outDir": "build",
+		"rootDir": "src",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"types": ["@types/node"]
 	}
 }

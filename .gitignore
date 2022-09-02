@@ -3,8 +3,8 @@
 /*.rbxl.lock
 
 ## Node built directories
-/node_modules
-/build
+/server/node_modules
+/server/build
 
 ## Logs
 *.log
