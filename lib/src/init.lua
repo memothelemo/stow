@@ -44,6 +44,30 @@ function StowStore:_headers(...)
 end
 
 --[[
+    Shuts down a session to the Stow database API
+]]
+function StowStore:_logoutClientSession()
+    log("[%s] shutting down", self._storeName)
+    local success, response = pcall(Http.RequestAsync, {
+        Url = string.format("%s/logout", self._databaseUrl),
+        Method = "POST",
+        Headers = self:_headers(),
+    })
+    print(response)
+    local alternative = success and not response.Success
+    if not success or not response.Success then
+        log("[%s] failed to logout the API", self._storeName)
+        if alternative then
+            log("[%s] error: (%d) %s", self._storeName, response.StatusCode, response.StatusMessage)
+        else
+            log("[%s] error: %s", self._storeName, tostring(response))
+        end
+    else
+        log("[%s] successfully logged out", self._storeName)
+    end
+end
+
+--[[
     Registers a new session to the Stow database API
 ]]
 function StowStore:_registerClientSession()
@@ -57,26 +81,7 @@ function StowStore:_registerClientSession()
     })
 
     game:BindToClose(function()
-        task.spawn(function()
-            log("[%s] shutting down", self._storeName)
-            local success, response = pcall(Http.RequestAsync, {
-                Url = string.format("%s/logout", self._databaseUrl),
-                Method = "POST",
-                Headers = self:_headers(),
-            })
-            print(response)
-            local alternative = success and not response.Success
-            if not success or not response.Success then
-                log("[%s] failed to logout the API", self._storeName)
-                if alternative then
-                    log("[%s] error: (%d) %s", self._storeName, response.StatusCode, response.StatusMessage)
-                else
-                    log("[%s] error: %s", self._storeName, tostring(response))
-                end
-            else
-                log("[%s] successfully logged out", self._storeName)
-            end
-        end)
+        task.spawn(self._logoutClientSession, self)
 
         -- waiting for a second to log out the session
         -- otherwise, let the server do the cleanup every 10 minutes
