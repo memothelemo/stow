@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.2",
-    "fastify": "^4.5.3",
+    "fastify": "^4.8.1",
     "pino": "^8.4.2",
     "pino-pretty": "^9.1.0"
   }
